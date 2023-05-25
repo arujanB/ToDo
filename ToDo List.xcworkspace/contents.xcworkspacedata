@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:ToDoItem+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:ToDoItem+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
+      location = "group:ToDo List.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+</Workspace>
