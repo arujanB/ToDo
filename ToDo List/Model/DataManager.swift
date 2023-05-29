@@ -19,9 +19,24 @@ struct DataManager{
     
     var delegate: DataManagerDelegate?
     
-    func getAllItems() {
+    func getAllItems(with text: String = "") {
         do {
-            let models = try context.fetch(ToDoItem.fetchRequest())
+            let request = ToDoItem.fetchRequest()
+            
+            //HELP TO WORK WITH SEARCH BAR
+            if text != "" {
+                let predicate = NSPredicate(format: "name CONTAINS %@", text)
+                request.predicate = predicate
+            }
+            //till here
+            
+            //TO SORT THE LIST
+            let desc = NSSortDescriptor(key: "name", ascending: true)
+            request.sortDescriptors = [desc]
+            //
+            
+//            let models = try context.fetch(ToDoItem.fetchRequest())
+            let models = try context.fetch(request)
             delegate?.didUpdateModelList(with: models)
         }catch {
             delegate?.didFailWithError(error: error)
@@ -36,9 +51,9 @@ struct DataManager{
             try context.save()
             let models = try context.fetch(ToDoItem.fetchRequest())
             delegate?.didUpdateModelList(with: models)
-            getAllItems()
+//            getAllItems()
         }catch{
-            print("Error adding data", error)
+            delegate?.didFailWithError(error: error)
         }
     }
     
@@ -49,9 +64,9 @@ struct DataManager{
             try context.save()
             let models = try context.fetch(ToDoItem.fetchRequest())
             delegate?.didUpdateModelList(with: models)
-            getAllItems()
+//            getAllItems()
         }catch{
-            print("Error adding data", error)
+            delegate?.didFailWithError(error: error)
         }
     }
     
@@ -61,9 +76,9 @@ struct DataManager{
             try context.save()
             let models = try context.fetch(ToDoItem.fetchRequest())
             delegate?.didUpdateModelList(with: models)
-            getAllItems()
+//            getAllItems()
         }catch{
-            print("Error adding data", error)
+            delegate?.didFailWithError(error: error)
         }
     }
 

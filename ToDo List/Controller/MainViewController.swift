@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     
     private var models = [ToDoItem]()
     
-    private lazy var filteredmodels = models
+//    private lazy var filteredmodels = models
     
     private lazy var searchBar: UISearchBar = {
         var searchBar = UISearchBar()
@@ -113,13 +113,13 @@ extension MainViewController: DataManagerDelegate{
 //MARK: - tableView DataSource
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredmodels.count
+        return models.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.IDENTIFIER, for: indexPath) as! MainTableViewCell
         cell.selectionStyle = .none
-        cell.configure(with: filteredmodels[indexPath.row].name!)
+        cell.configure(with: models[indexPath.row].name!)
         var randomNum = CGFloat.random(in: 120...255)
         cell.backgroundColor = UIColor(red: randomNum/255, green: randomNum/255, blue: randomNum/255, alpha: 1)
         return cell
@@ -136,16 +136,16 @@ extension MainViewController: UITableViewDelegate{
             
             let alert = UIAlertController(title: "Edit Item", message: "Fill to update it", preferredStyle: .alert)
             alert.addTextField()
-            alert.textFields?.first?.text = self.filteredmodels[indexPath.row].name
+            alert.textFields?.first?.text = self.models[indexPath.row].name
             alert.addAction(UIAlertAction(title: "Submit", style: .cancel, handler: { _ in
                 guard let field = alert.textFields?.first, let text = field.text, !text.isEmpty else { return }
-                DataManager.shared.updatedItem(item: self.filteredmodels[indexPath.row], newName: text)
+                DataManager.shared.updatedItem(item: self.models[indexPath.row], newName: text)
             }))
             self.present(alert, animated: true)
             
         }))
         sheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
-            DataManager.shared.deleteItem(item: self.filteredmodels[indexPath.row])
+            DataManager.shared.deleteItem(item: self.models[indexPath.row])
         }))
         sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
@@ -162,19 +162,20 @@ extension MainViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
-            filteredmodels = models
-        }else {
-            filteredmodels.removeAll()
-            for model in models {
-                if let name = model.name, name.contains(searchText) {
-                    filteredmodels.append(model)
-                }
-            }
-        }
-        DispatchQueue.main.async {
-            self.myTableView.reloadData()
-        }
+        DataManager.shared.getAllItems(with: searchText)
+//        if searchText == "" {
+//            filteredmodels = models
+//        }else {
+//            filteredmodels.removeAll()
+//            for model in models {
+//                if let name = model.name, name.contains(searchText) {
+//                    filteredmodels.append(model)
+//                }
+//            }
+//        }
+//        DispatchQueue.main.async {
+//            self.myTableView.reloadData()
+//        }
         
     }
 }
