@@ -3,5 +3,10 @@
     <entity name="ToDoItem" representedClassName="ToDoItem" syncable="YES" codeGenerationType="class">
         <attribute name="cretedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="section" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ToDoSection"/>
+    </entity>
+    <entity name="ToDoSection" representedClassName="ToDoSection" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ToDoItem"/>
     </entity>
 </model>

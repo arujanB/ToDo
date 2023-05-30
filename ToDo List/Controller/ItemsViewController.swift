@@ -12,7 +12,7 @@ class ItemsViewController: UIViewController {
     
 //    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    private var models = [ToDoItem)
+    private var models = [ToDoItem]()
     
 //    private lazy var filteredmodels = models
     
@@ -36,8 +36,8 @@ class ItemsViewController: UIViewController {
         view.backgroundColor = .blue
         
 //        getAllItems()
-        DataManager.shared.delegate = self
-        DataManager.shared.getAllItems()
+        ItemManager.shared.delegate = self
+        ItemManager.shared.getAllItems()
         
         myTableView.dataSource = self
         myTableView.delegate = self
@@ -53,7 +53,7 @@ class ItemsViewController: UIViewController {
         alert.addTextField()
         alert.addAction(UIAlertAction(title: "Submit", style: .cancel, handler: { _ in
             guard let field = alert.textFields?.first, let text = field.text, !text.isEmpty else { return }
-            DataManager.shared.createItem(with: text)
+            ItemManager.shared.createItem(with: text)
 //            self.createItem(with: text)
         }))
         present(alert, animated: true)
@@ -96,7 +96,7 @@ class ItemsViewController: UIViewController {
 }
 
 //MARK: - DataManagerDelegate {
-extension ItemsViewController: DataManagerDelegate{
+extension ItemsViewController: ItemManagerDelegate{
     func didUpdateModelList(with model: [ToDoItem]) {
         self.models = model
         DispatchQueue.main.async {
@@ -139,13 +139,13 @@ extension ItemsViewController: UITableViewDelegate{
             alert.textFields?.first?.text = self.models[indexPath.row].name
             alert.addAction(UIAlertAction(title: "Submit", style: .cancel, handler: { _ in
                 guard let field = alert.textFields?.first, let text = field.text, !text.isEmpty else { return }
-                DataManager.shared.updatedItem(item: self.models[indexPath.row], newName: text)
+                ItemManager.shared.updatedItem(item: self.models[indexPath.row], newName: text)
             }))
             self.present(alert, animated: true)
             
         }))
         sheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
-            DataManager.shared.deleteItem(item: self.models[indexPath.row])
+            ItemManager.shared.deleteItem(item: self.models[indexPath.row])
         }))
         sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
@@ -162,7 +162,7 @@ extension ItemsViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        DataManager.shared.getAllItems(with: searchText)
+        ItemManager.shared.getAllItems(with: searchText)
 //        if searchText == "" {
 //            filteredmodels = models
 //        }else {

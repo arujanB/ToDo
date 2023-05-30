@@ -8,16 +8,16 @@
 import Foundation
 import UIKit
 
-protocol DataManagerDelegate {
+protocol ItemManagerDelegate {
     func didUpdateModelList(with model: [ToDoItem])
     func didFailWithError(error: Error)
 }
 
-struct DataManager{
+struct ItemManager{
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    static var shared = DataManager()
+    static var shared = ItemManager()
     
-    var delegate: DataManagerDelegate?
+    var delegate: ItemManagerDelegate?
     
     func getAllItems(with text: String = "") {
         do {
@@ -49,7 +49,13 @@ struct DataManager{
         newItem.cretedAt = Date()
         do{
             try context.save()
-            let models = try context.fetch(ToDoItem.fetchRequest())
+            
+            let request = ToDoItem.fetchRequest()
+            //TO SORT THE LIST
+            let desc = NSSortDescriptor(key: "name", ascending: true)
+            request.sortDescriptors = [desc]
+            
+            let models = try context.fetch(request)
             delegate?.didUpdateModelList(with: models)
 //            getAllItems()
         }catch{
@@ -74,7 +80,13 @@ struct DataManager{
         item.name = newName
         do{
             try context.save()
-            let models = try context.fetch(ToDoItem.fetchRequest())
+            
+            let request = ToDoItem.fetchRequest()
+            //TO SORT THE LIST
+            let desc = NSSortDescriptor(key: "name", ascending: true)
+            request.sortDescriptors = [desc]
+            
+            let models = try context.fetch(request)
             delegate?.didUpdateModelList(with: models)
 //            getAllItems()
         }catch{
