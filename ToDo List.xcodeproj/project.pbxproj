@@ -15,6 +15,8 @@
 		844190E229DEF83100C5BF39 /* ToDo_List.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 844190E029DEF83100C5BF39 /* ToDo_List.xcdatamodeld */; };
 		844190E429DEF83600C5BF39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844190E329DEF83600C5BF39 /* Assets.xcassets */; };
 		844190E729DEF83600C5BF39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844190E529DEF83600C5BF39 /* LaunchScreen.storyboard */; };
+		8495248D2A264B1A002E5112 /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8495248C2A264B19002E5112 /* CreateViewController.swift */; };
+		8495248F2A270399002E5112 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8495248E2A270399002E5112 /* Constants.swift */; };
 		84A5152C2A259E3600EF4BF5 /* SectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5152B2A259E3600EF4BF5 /* SectionManager.swift */; };
 		84B2A9A82A02944C0019DECF /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2A9A72A02944B0019DECF /* MainTableViewCell.swift */; };
 		84B2A9AD2A02A6AD0019DECF /* SectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2A9AC2A02A6AD0019DECF /* SectionViewController.swift */; };
@@ -33,6 +35,8 @@
 		844190E329DEF83600C5BF39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		844190E629DEF83600C5BF39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		844190E829DEF83600C5BF39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8495248C2A264B19002E5112 /* CreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
+		8495248E2A270399002E5112 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		84A5152B2A259E3600EF4BF5 /* SectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionManager.swift; sourceTree = "<group>"; };
 		84B2A9A72A02944B0019DECF /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		84B2A9AC2A02A6AD0019DECF /* SectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +89,7 @@
 				84B2A9A92A02A6720019DECF /* Model */,
 				84B2A9AA2A02A6800019DECF /* View */,
 				84B2A9AB2A02A6890019DECF /* Controller */,
+				8495248E2A270399002E5112 /* Constants.swift */,
 				844190E329DEF83600C5BF39 /* Assets.xcassets */,
 				844190E529DEF83600C5BF39 /* LaunchScreen.storyboard */,
 				844190E829DEF83600C5BF39 /* Info.plist */,
@@ -115,6 +120,7 @@
 			children = (
 				84B2A9AC2A02A6AD0019DECF /* SectionViewController.swift */,
 				844190DB29DEF83100C5BF39 /* ItemsViewController.swift */,
+				8495248C2A264B19002E5112 /* CreateViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -243,8 +249,10 @@
 			files = (
 				844190DC29DEF83100C5BF39 /* ItemsViewController.swift in Sources */,
 				844190D829DEF83100C5BF39 /* AppDelegate.swift in Sources */,
+				8495248D2A264B1A002E5112 /* CreateViewController.swift in Sources */,
 				844190DA29DEF83100C5BF39 /* SceneDelegate.swift in Sources */,
 				843F16B32A0925FD00F88BA8 /* ItemManager.swift in Sources */,
+				8495248F2A270399002E5112 /* Constants.swift in Sources */,
 				844190E229DEF83100C5BF39 /* ToDo_List.xcdatamodeld in Sources */,
 				84B2A9A82A02944C0019DECF /* MainTableViewCell.swift in Sources */,
 				84B2A9AD2A02A6AD0019DECF /* SectionViewController.swift in Sources */,

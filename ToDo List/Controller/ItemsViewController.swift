@@ -13,6 +13,7 @@ class ItemsViewController: UIViewController {
 //    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     private var models = [ToDoItem]()
+    private var seactionModel: ToDoSection?
     
 //    private lazy var filteredmodels = models
     
@@ -37,7 +38,8 @@ class ItemsViewController: UIViewController {
         
 //        getAllItems()
         ItemManager.shared.delegate = self
-        ItemManager.shared.getAllItems()
+        ItemManager.shared.getAllItems(section: seactionModel!)
+//        ItemManager.shared.getAllItems()
         
         myTableView.dataSource = self
         myTableView.delegate = self
@@ -48,15 +50,23 @@ class ItemsViewController: UIViewController {
         setUpConstrains()
     }
     
-    @objc func buttonTapped() {
-        let alert = UIAlertController(title: "New Item", message: "Fill to add it", preferredStyle: .alert)
-        alert.addTextField()
-        alert.addAction(UIAlertAction(title: "Submit", style: .cancel, handler: { _ in
-            guard let field = alert.textFields?.first, let text = field.text, !text.isEmpty else { return }
-            ItemManager.shared.createItem(with: text)
-//            self.createItem(with: text)
-        }))
-        present(alert, animated: true)
+    func setSection(with section: ToDoSection) {
+        self.seactionModel = section
+    }
+    
+    @objc private func buttonTapped() {
+//        let alert = UIAlertController(title: "New Item", message: "Fill to add it", preferredStyle: .alert)
+//        alert.addTextField()
+//        alert.addAction(UIAlertAction(title: "Submit", style: .cancel, handler: { _ in
+//            guard let field = alert.textFields?.first, let text = field.text, !text.isEmpty else { return }
+//            ItemManager.shared.createItem(with: text/*, section: <#ToDoSection#>*/)
+////            self.createItem(with: text)
+//        }))
+//        present(alert, animated: true)
+        let view = CreateViewController()
+        view.setSection(with: seactionModel!)
+        print("tappet")
+        navigationController!.pushViewController(view, animated: true)
     }
     
 //    func getAllItems() {
@@ -119,7 +129,7 @@ extension ItemsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.IDENTIFIER, for: indexPath) as! MainTableViewCell
         cell.selectionStyle = .none
-        cell.configure(with: models[indexPath.row].name!)
+        cell.configure(with: models[indexPath.row].name!, priority: models[indexPath.row].priority)
         var randomNum = CGFloat.random(in: 120...255)
         cell.backgroundColor = UIColor(red: randomNum/255, green: randomNum/255, blue: randomNum/255, alpha: 1)
         return cell
@@ -129,23 +139,27 @@ extension ItemsViewController: UITableViewDataSource {
 //MARK: - tableView Delegate
 extension ItemsViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        deleteItem(item: models[indexPath.row])
         let sheet = UIAlertController(title: "Edit", message: nil, preferredStyle: .actionSheet)
         
         sheet.addAction(UIAlertAction(title: "Update", style: .default, handler: { _ in
             
             let alert = UIAlertController(title: "Edit Item", message: "Fill to update it", preferredStyle: .alert)
             alert.addTextField()
-            alert.textFields?.first?.text = self.models[indexPath.row].name
+            alert.textFields?[0].text = self.models[indexPath.row].name
+            alert.textFields?[1].text = self.models[indexPath.row].desc
+            
             alert.addAction(UIAlertAction(title: "Submit", style: .cancel, handler: { _ in
-                guard let field = alert.textFields?.first, let text = field.text, !text.isEmpty else { return }
-                ItemManager.shared.updatedItem(item: self.models[indexPath.row], newName: text)
+                guard let field = alert.textFields?[0], let text = field.text, !text.isEmpty, let field2 = alert.textFields?[1], let desc = field2.text, !desc.isEmpty else { return }
+                ItemManager.shared.updatedItem(item: self.models[indexPath.row], newName: text, newDesc: desc, section: self.models[indexPath.section].section!)
+                
+//                (item: self.models[indexPath.row], newName: text/*, section: sec*/)
             }))
             self.present(alert, animated: true)
             
         }))
         sheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
-            ItemManager.shared.deleteItem(item: self.models[indexPath.row])
+            guard let sect = self.models[indexPath.row].section else { return }
+            ItemManager.shared.deleteItem(item: self.models[indexPath.row], section: sect)
         }))
         sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
@@ -162,7 +176,7 @@ extension ItemsViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        ItemManager.shared.getAllItems(with: searchText)
+        ItemManager.shared.getAllItems(with: searchText, section: seactionModel!)
 //        if searchText == "" {
 //            filteredmodels = models
 //        }else {

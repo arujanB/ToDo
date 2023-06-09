@@ -41,11 +41,14 @@ class SectionViewController: UIViewController {
     @objc func buttonTapped() {
         let alert = UIAlertController(title: "Add Section", message: "Fill It", preferredStyle: .alert)
         alert.addTextField()
-        alert.addAction(UIAlertAction(title: "Add", style: .cancel, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { _ in
             print("Creating Section")
             guard let field = alert.textFields?[0], let text = field.text else { return }
 //            self.createSection(with: text)
             SectionManager.shared.createSection(with: text)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+            print("tapped")
         }))
         present(alert, animated: true)
     }
@@ -130,6 +133,7 @@ extension SectionViewController: UITableViewDataSource {
 extension SectionViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let view = ItemsViewController()
+        view.setSection(with: sectionModel[indexPath.row])
         navigationController?.pushViewController(view, animated: true)
         print("Hiiii")
     }

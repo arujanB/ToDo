@@ -19,20 +19,28 @@ struct ItemManager{
     
     var delegate: ItemManagerDelegate?
     
-    func getAllItems(with text: String = "") {
+    func getAllItems(with text: String = "", section: ToDoSection) {
         do {
             let request = ToDoItem.fetchRequest()
             
             //HELP TO WORK WITH SEARCH BAR
             if text != "" {
-                let predicate = NSPredicate(format: "name CONTAINS %@", text)
-                request.predicate = predicate
+                let predicateSearch = NSPredicate(format: "name CONTAINS %@", text)
+//                request.predicate = predicateSearch
+                
+                let predicateSection = NSPredicate(format: "section == %@", section)
+                request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicateSearch, predicateSection])
             }
             //till here
+            else {
+                let predicateSection = NSPredicate(format: "section == %@", section)
+                request.predicate = predicateSection
+            }
             
             //TO SORT THE LIST
-            let desc = NSSortDescriptor(key: "name", ascending: true)
-            request.sortDescriptors = [desc]
+            let name = NSSortDescriptor(key: "name", ascending: true)
+            let desc = NSSortDescriptor(key: "desc", ascending: true)
+            request.sortDescriptors = [name, desc]
             //
             
 //            let models = try context.fetch(ToDoItem.fetchRequest())
@@ -43,27 +51,25 @@ struct ItemManager{
         }
     }
     
-    func createItem(with name: String) {
+    func createItem(name: String, description: String, priority: String, section: ToDoSection) {
         let newItem = ToDoItem(context: context) //creat the newItem constant class ToDoItem and context is mean get access to save the data to local database
         newItem.name = name
+        newItem.desc = description
+        newItem.priority = Int16(priority)!
         newItem.cretedAt = Date()
+        section.addToItem(newItem)
+//        newItem.section = section //is same in 59s line of the code
         do{
             try context.save()
-            
-            let request = ToDoItem.fetchRequest()
-            //TO SORT THE LIST
-            let desc = NSSortDescriptor(key: "name", ascending: true)
-            request.sortDescriptors = [desc]
-            
-            let models = try context.fetch(request)
+            let models = try context.fetch(ToDoItem.fetchRequest())
             delegate?.didUpdateModelList(with: models)
-//            getAllItems()
+//            getAllItems(/*section: section*/)
         }catch{
             delegate?.didFailWithError(error: error)
         }
     }
     
-    func deleteItem(item: ToDoItem) {
+    func deleteItem(item: ToDoItem, section: ToDoSection) {
         context.delete(item)
         
         do {
@@ -76,19 +82,15 @@ struct ItemManager{
         }
     }
     
-    func updatedItem(item: ToDoItem, newName: String) {
+    func updatedItem(item: ToDoItem, newName: String, newDesc: String/*, priority: Int16, newPriority: Int16*/, section: ToDoSection) {
         item.name = newName
+        item.desc = newDesc
+//        item.priority = newPriority
         do{
             try context.save()
-            
-            let request = ToDoItem.fetchRequest()
-            //TO SORT THE LIST
-            let desc = NSSortDescriptor(key: "name", ascending: true)
-            request.sortDescriptors = [desc]
-            
-            let models = try context.fetch(request)
+            let models = try context.fetch(ToDoItem.fetchRequest())
             delegate?.didUpdateModelList(with: models)
-//            getAllItems()
+//            getAllItems(/*section: section*/)
         }catch{
             delegate?.didFailWithError(error: error)
         }

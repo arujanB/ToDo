@@ -18,6 +18,12 @@ class MainTableViewCell: UITableViewCell {
         return label
     }()
     
+    private lazy var priority: UILabel = {
+        var label = UILabel()
+        label.text = "Priority"
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -29,8 +35,9 @@ class MainTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with name: String) {
+    func configure(with name: String, priority: Int16 = 26) {
         myLabel.text = name
+        self.priority.text = " Priority: \(priority)"
     }
 
 }
@@ -39,12 +46,19 @@ class MainTableViewCell: UITableViewCell {
 extension MainTableViewCell{
     func setUpViews(){
         contentView.addSubview(myLabel)
+        contentView.addSubview(priority)
     }
     
     func setUpConstraints() {
         myLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().inset(10)
+        }
+        
+        priority.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+//            make.leading.equalTo(myLabel.snp.trailing)
+            make.trailing.equalToSuperview().inset(10)
         }
     }
 }

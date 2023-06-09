@@ -2,16 +2,16 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "absolute:/Users/admin/Desktop/Internship/Element/ToDo List/ToDo List/Model/ToDoSection+CoreDataClass.swift">
+      location = "group:ToDoItem+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "absolute:/Users/admin/Desktop/Internship/Element/ToDo List/ToDo List/Model/ToDoSection+CoreDataProperties.swift">
+      location = "group:ToDoItem+CoreDataProperties.swift">
    </FileRef>
    <FileRef
-      location = "absolute:/Users/admin/Desktop/Internship/Element/ToDo List/ToDo List/Model/ToDoItem+CoreDataClass.swift">
+      location = "group:ToDoSection+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "absolute:/Users/admin/Desktop/Internship/Element/ToDo List/ToDo List/Model/ToDoItem+CoreDataProperties.swift">
+      location = "group:ToDoSection+CoreDataProperties.swift">
    </FileRef>
    <FileRef
       location = "group:ToDo List.xcodeproj">
