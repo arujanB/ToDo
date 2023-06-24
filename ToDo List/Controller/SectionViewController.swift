@@ -17,7 +17,7 @@ class SectionViewController: UIViewController {
         tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.IDENTIFIER)
 //        tableView.allowsSelection = false
         tableView.showsVerticalScrollIndicator = false
-        tableView.backgroundColor = .orange
+        tableView.backgroundColor = .systemGray5
         return tableView
     }()
 

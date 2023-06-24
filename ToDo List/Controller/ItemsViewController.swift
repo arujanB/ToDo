@@ -28,13 +28,12 @@ class ItemsViewController: UIViewController {
         tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.IDENTIFIER)
 //        tableView.allowsSelection = false
         tableView.showsVerticalScrollIndicator = false
-        tableView.backgroundColor = .orange
         return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
+        view.backgroundColor = .lightGray
         
 //        getAllItems()
         ItemManager.shared.delegate = self
@@ -143,18 +142,20 @@ extension ItemsViewController: UITableViewDelegate{
         
         sheet.addAction(UIAlertAction(title: "Update", style: .default, handler: { _ in
             
-            let alert = UIAlertController(title: "Edit Item", message: "Fill to update it", preferredStyle: .alert)
-            alert.addTextField()
-            alert.textFields?[0].text = self.models[indexPath.row].name
-            alert.textFields?[1].text = self.models[indexPath.row].desc
-            
-            alert.addAction(UIAlertAction(title: "Submit", style: .cancel, handler: { _ in
-                guard let field = alert.textFields?[0], let text = field.text, !text.isEmpty, let field2 = alert.textFields?[1], let desc = field2.text, !desc.isEmpty else { return }
-                ItemManager.shared.updatedItem(item: self.models[indexPath.row], newName: text, newDesc: desc, section: self.models[indexPath.section].section!)
-                
-//                (item: self.models[indexPath.row], newName: text/*, section: sec*/)
-            }))
-            self.present(alert, animated: true)
+//            let alert = UIAlertController(title: "Edit Item", message: "Fill to update it", preferredStyle: .alert)
+//            alert.addTextField()
+//            alert.textFields?[0].text = self.models[indexPath.row].name
+//            alert.textFields?[1].text = self.models[indexPath.row].desc
+//
+//            alert.addAction(UIAlertAction(title: "Submit", style: .cancel, handler: { _ in
+//                guard let field = alert.textFields?[0], let text = field.text, !text.isEmpty, let field2 = alert.textFields?[1], let desc = field2.text, !desc.isEmpty else { return }
+//                ItemManager.shared.updatedItem(item: self.models[indexPath.row], newName: text, newDesc: desc, section: self.models[indexPath.section].section!)
+//
+////                (item: self.models[indexPath.row], newName: text/*, section: sec*/)
+//            }))
+//            self.present(alert, animated: true)
+            let view = CreateViewController()
+            self.navigationController?.pushViewController(view, animated: true)
             
         }))
         sheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in

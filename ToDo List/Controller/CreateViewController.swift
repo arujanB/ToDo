@@ -47,7 +47,7 @@ class CreateViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray5
+        view.backgroundColor = UIColor(red: 241/255, green: 246/255, blue: 249/255, alpha: 1)
         
         priorityPickerView.dataSource = self
         priorityPickerView.delegate = self

@@ -61,9 +61,9 @@ struct ItemManager{
 //        newItem.section = section //is same in 59s line of the code
         do{
             try context.save()
-            let models = try context.fetch(ToDoItem.fetchRequest())
-            delegate?.didUpdateModelList(with: models)
-//            getAllItems(/*section: section*/)
+//            let models = try context.fetch(ToDoItem.fetchRequest())
+//            delegate?.didUpdateModelList(with: models)
+            getAllItems(section: section)
         }catch{
             delegate?.didFailWithError(error: error)
         }
@@ -74,9 +74,7 @@ struct ItemManager{
         
         do {
             try context.save()
-            let models = try context.fetch(ToDoItem.fetchRequest())
-            delegate?.didUpdateModelList(with: models)
-//            getAllItems()
+            getAllItems(section: section)
         }catch{
             delegate?.didFailWithError(error: error)
         }
